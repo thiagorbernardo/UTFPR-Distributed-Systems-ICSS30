@@ -1,0 +1,345 @@
+[
+    {
+        "id": "c63f6e34-3eb7-4d0a-b6ea-20e4b6e1a0b1",
+        "name": "Smartphone Galaxy S21",
+        "price": 799.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "979f8be0-1d5f-4310-8be1-6c2e2d2d6c4f",
+        "name": "Laptop HP Spectre x360",
+        "price": 1249.89,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "0cb155da-d81c-4371-90ab-ea2ea4faff05",
+        "name": "Sony Noise-Cancelling Headphones",
+        "price": 189.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "4d63a152-9680-44c6-bb16-8c9f7987d21a",
+        "name": "LG 4K Ultra HD Smart TV",
+        "price": 699.00,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "ae5c5f32-01d7-4c71-888f-8278e2b0f8e2",
+        "name": "Apple AirPods Pro",
+        "price": 219.50,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "2ef2a8bf-5dd0-4ef4-b14b-5ed6e10c8231",
+        "name": "Dell Gaming Monitor",
+        "price": 379.75,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "87452163-2efc-45b7-9eb3-439578b99a11",
+        "name": "GoPro Hero 9",
+        "price": 299.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "7f2d940e-ccda-4e77-8b39-24f431d64a79",
+        "name": "Samsung Galaxy Watch 4",
+        "price": 179.95,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "b7a44cd1-978e-4df6-8a4e-6d13da2755db",
+        "name": "Razer BlackWidow Mechanical Keyboard",
+        "price": 139.00,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "ec87de7d-8a87-475d-8c8c-13bca902752b",
+        "name": "Sony 65-Inch 4K OLED TV",
+        "price": 1699.99,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "bfcf0e96-b536-4c9d-8a6c-ebea3ff54c31",
+        "name": "Logitech G Pro X Gaming Headset",
+        "price": 109.75,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "db07d2c0-56e7-49e6-8c27-bd0f870f6db9",
+        "name": "Apple MacBook Air M1",
+        "price": 999.00,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "3355f9e6-0d7d-4abf-9e44-862ac3b6e3de",
+        "name": "Nintendo Switch OLED Model",
+        "price": 329.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "16ff6df4-dc79-4c92-b7e1-62dd185f4f08",
+        "name": "Bose SoundLink Revolve+ Speaker",
+        "price": 199.95,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "57365e4f-3a6f-49d5-9a57-4c16b3e8044c",
+        "name": "Sony PS5 DualSense Wireless Controller",
+        "price": 69.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "af7a39da-d1a0-49e6-8cd4-51168d1f35b4",
+        "name": "LG Soundbar with Subwoofer",
+        "price": 249.00,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "dd0f7e7c-7c35-4f2e-8f5e-9e8ab8f38d0a",
+        "name": "Corsair Gaming Mouse",
+        "price": 49.50,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "fc5c3b28-308f-40e6-b5eb-946c52f2d9e9",
+        "name": "Samsung 49-Inch Curved Gaming Monitor",
+        "price": 799.75,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "b384635a-9e97-4c8b-80ef-d1d35ad4c81b",
+        "name": "Sony WH-1000XM4 Noise-Cancelling Headphones",
+        "price": 289.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "a2dd0631-e700-438e-9f95-2c17e3c6e7b1",
+        "name": "Sony 75-Inch 8K LED TV",
+        "price": 2999.00,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "dc6ef72f-bfc7-4e72-88e3-d80e17c2df25",
+        "name": "Bose QuietComfort 45 Wireless Headphones",
+        "price": 329.50,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "b5a2f3d2-5483-4d20-9567-9c798384a1c9",
+        "name": "Alienware Area-51m R2 Gaming Laptop",
+        "price": 2299.99,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "8f4d5c61-bf26-4b75-9a91-61261743253c",
+        "name": "Samsung Galaxy Tab S7+",
+        "price": 549.00,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "32f9c6e2-6be3-487f-9b0e-5e8ecb34f2f0",
+        "name": "LG UltraGear 27-Inch Gaming Monitor",
+        "price": 379.75,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "3f662fce-9359-4b18-95b5-1e546d7d6d0e",
+        "name": "Razer Naga X Gaming Mouse",
+        "price": 69.99,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "d098dd4b-6aa3-4bc7-8d8f-d3ea07e133b1",
+        "name": "Sony Xperia 1 III Smartphone",
+        "price": 999.00,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "2e5fe80e-b07f-4a68-bf9e-557f7e80f05d",
+        "name": "Logitech MX Master 3 Wireless Mouse",
+        "price": 89.75,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "f9d999a6-5d8c-4b3c-8604-5486f476c74c",
+        "name": "Samsung Galaxy Buds Pro",
+        "price": 159.99,
+        "store": "Americanas",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "7e4c9b1e-9bbd-4c31-83ab-ae5b0b17368a",
+        "name": "Acer Predator Helios 300 Gaming Laptop",
+        "price": 1199.00,
+        "store": "KaBuM",
+        "category": "ELECTRONICS"
+    },
+    {
+        "id": "7e4c9b1e-9bbd-4c31-83ab-ae5b0b17368a",
+        "name": "Microwave",
+        "price": 1199.00,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "2d7f1c35-e5a3-48b1-96a4-2c7e0ed6e328",
+        "name": "Coffee Maker",
+        "price": 89.99,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "a6f0d772-b1d2-4b96-81a9-3e5e5b2ab6e1",
+        "name": "Vacuum Cleaner",
+        "price": 249.50,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "d9c46a5e-82f0-4a7c-b97f-481e35e450d8",
+        "name": "Blender",
+        "price": 79.00,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "c0ac259f-94bf-4e8b-9272-7a22e1889e13",
+        "name": "Toaster",
+        "price": 49.99,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "9f4894f7-78a3-4e02-858a-8a2c161cfbb0",
+        "name": "Air Purifier",
+        "price": 179.00,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "f12f6b47-9c63-45fc-a4ab-67107f2a53ad",
+        "name": "Electric Kettle",
+        "price": 34.95,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "7616a48a-147d-4e3c-9513-03a052052f7d",
+        "name": "Robot Vacuum",
+        "price": 399.00,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "f1d3a013-992a-4d74-b4e6-6576b82c21a4",
+        "name": "Rice Cooker",
+        "price": 69.99,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "1a9e77d0-b266-4b16-b15d-ec18f245b2ca",
+        "name": "Water Filter Pitcher",
+        "price": 21.50,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "c932ea16-6091-4d3b-8430-9c7f6dbf5f56",
+        "name": "Food Processor",
+        "price": 129.00,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "0a6ccf9b-5d7e-4b01-8df1-965bc17e2bb6",
+        "name": "Washing Machine",
+        "price": 699.99,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "6b8b9e06-9b2d-4b0e-87b9-5e1506a81857",
+        "name": "Air Fryer",
+        "price": 89.95,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "dab0297d-181f-432c-9c66-4f3e93099285",
+        "name": "Iron",
+        "price": 34.99,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "e8e98ee1-b05c-4019-a7c4-6b3949811b5a",
+        "name": "Electric Toothbrush",
+        "price": 49.50,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "a84c7525-1900-49d1-b80f-0473f7fdd17d",
+        "name": "Cordless Vacuum",
+        "price": 149.00,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "bc9b7b6e-4eb5-45e3-b59d-1d6f97d655c6",
+        "name": "Coffee Grinder",
+        "price": 29.99,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "f0367f0d-464a-4454-b77f-e7345768e998",
+        "name": "Electric Fan",
+        "price": 59.75,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "edae4d7f-25fc-472b-aa2c-dc6540841d57",
+        "name": "Water Dispenser",
+        "price": 79.00,
+        "store": "Americanas",
+        "category": "HOUSEHOLD"
+    },
+    {
+        "id": "788f940b-d9d7-447e-a7d0-6fc18caac982",
+        "name": "Blender",
+        "price": 39.99,
+        "store": "KaBuM",
+        "category": "HOUSEHOLD"
+    }
+]
