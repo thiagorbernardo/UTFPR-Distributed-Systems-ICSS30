@@ -5,6 +5,7 @@ import json
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     # After connection we subscribe to the "$SYS/#" topics (internal topics that will produce lot of data, perfect for our example)
+    print("Inscrito no topico HOUSEHOLD")
     client.subscribe("HOUSEHOLD")
 
 
