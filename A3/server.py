@@ -1,6 +1,8 @@
 import json
 import base64
 import random
+import threading
+import time
 from typing import List
 import uuid
 from datetime import datetime
@@ -27,6 +29,10 @@ class Manager:
         print('verify signature')
         signature_bytes = base64.b64decode(signature['data'])
         self.public_key.verify(signature_bytes, self.name.encode('utf-8'))
+
+    def notify(self, type: int, message: str):
+        manager_notifier = Pyro5.api.Proxy(self.notification_uri)
+        manager_notifier.notify(type, message)
         
 
 class Product:
@@ -135,7 +141,7 @@ class Report:
         elif self.type == 3:
             report = self.get_low_interest_report(date)
         elif self.type == 4:
-            report = self.get_stock_min_quantity_report()
+            report = self.get_low_stock_report()
         else:
             report = []
 
@@ -157,7 +163,7 @@ class Report:
         stock = self.get_stock_report()
         low_interest = []
 
-        history_product_ids = [item['productId'] for item in history if datetime.fromisoformat(item['date']) >= date]
+        history_product_ids = [item['productId'] for item in history if datetime.fromisoformat(item['date']) >= date and item['quantity'] > 0]
         history_product_ids_unique = list(set(history_product_ids))
 
         # print(history_product_ids_unique)
@@ -169,7 +175,7 @@ class Report:
         # print(low_interest)
         return low_interest
 
-    def get_stock_min_quantity_report(self):
+    def get_low_stock_report(self):
         stock = self.get_stock_report()
         min_quantity_stock_items = []
 
@@ -212,6 +218,7 @@ class Server:
 
     def add_manager(self, name: str, public_key: bytes, notification_uri: str):
         self.manager = Manager(name, public_key, notification_uri)
+        threading.Thread(target=self._cron_notifications, args=()).start()
 
     def verify_manager(self, signature: str):
         if(self.manager == None):
@@ -235,6 +242,17 @@ class Server:
             date = datetime.fromisoformat(date)
         return report.get_report(date)
 
+    def _cron_notifications(self):
+        while not threading.Event().is_set():
+            if(self.manager != None):
+                low_intereset_report = Report(3, self.stock).get_report(datetime(1999, 1, 1))
+                low_stock_report = Report(4, self.stock).get_report()
+                if(low_intereset_report):
+                    self.manager.notify(3, low_intereset_report)
+                if(low_stock_report):
+                    self.manager.notify(4, low_stock_report)
+                    
+                time.sleep(60)
 
 if __name__ == '__main__':
     try:
