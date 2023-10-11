@@ -10,14 +10,13 @@ class Client:
     name: str
     public_key: Ed25519PublicKey
     uri: str
-    
     def __init__(self):
         self.name = None
         self.private_key = None
         self.public_key = None
         self.sign = None
         self.server = None
-        self.daemon = Pyro5.api.Daemon()
+        self.daemon = Pyro5.server.Daemon(host="192.168.15.97")
         self.notify_uri = self.daemon.register(Notify)
 
     def firstRegister(self, name):
@@ -30,12 +29,6 @@ class Client:
         encoding=serialization.Encoding.Raw,
         format=serialization.PublicFormat.Raw
         )
-
-        print("\n")
-        print(type(name))
-        print(type(public_key_bytes))
-        print(type(str(self.notify.uri)))
-        print("\n")
 
         self.server = Pyro5.api.Proxy("PYRONAME:server.uri")
         self.server.add_manager(name, public_key_bytes, str(self.notify_uri))
@@ -78,7 +71,10 @@ class Notify:
 
     def notify(self, type: int, notify: str):
 
-        print("Gerando relatorio \n\n")
+        if type == 3:
+            print("\nGerando relatorio de produtos não vendidos\n\n")
+        elif type == 4:
+            print("\nGerando relatorio de produtos que atingiram o estoque minimo \n\n")
         print(notify)
 
 
