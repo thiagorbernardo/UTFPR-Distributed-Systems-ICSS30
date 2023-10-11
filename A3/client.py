@@ -31,6 +31,12 @@ class Client:
         format=serialization.PublicFormat.Raw
         )
 
+        print("\n")
+        print(type(name))
+        print(type(public_key_bytes))
+        print(type(str(self.notify.uri)))
+        print("\n")
+
         self.server = Pyro5.api.Proxy("PYRONAME:server.uri")
         self.server.add_manager(name, public_key_bytes, str(self.notify.uri))
         threading.Thread(target=self.wait_notification, args=()).start()

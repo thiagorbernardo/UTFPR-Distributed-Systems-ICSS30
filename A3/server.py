@@ -251,7 +251,7 @@ class Server:
                     self.manager.notify(3, low_intereset_report)
                 if(low_stock_report):
                     self.manager.notify(4, low_stock_report)
-                    
+                print("enviando notificação \n")
                 time.sleep(60)
 
 if __name__ == '__main__':
