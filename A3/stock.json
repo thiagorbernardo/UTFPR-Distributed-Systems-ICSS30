@@ -27,7 +27,7 @@
         "_id": "4d63a152-9680-44c6-bb16-8c9f7987d21a",
         "name": "LG 4K Ultra HD Smart TV",
         "description": "LG 4K Ultra HD Smart TV",
-        "price": 699.00,
+        "price": 699.0,
         "quantity": 5,
         "minQuantity": 1
     },
@@ -35,7 +35,7 @@
         "_id": "ae5c5f32-01d7-4c71-888f-8278e2b0f8e2",
         "name": "Apple AirPods Pro",
         "description": "Apple AirPods Pro",
-        "price": 219.50,
+        "price": 219.5,
         "quantity": 5,
         "minQuantity": 1
     },
@@ -44,7 +44,15 @@
         "name": "Dell Gaming Monitor",
         "description": "Dell Gaming Monitor",
         "price": 379.75,
-        "quantity": 5,
+        "quantity": 1,
         "minQuantity": 1
+    },
+    {
+        "_id": "6aff8cde-771f-4dec-abfc-13b7498364e0",
+        "name": "Teste",
+        "description": "Testando",
+        "price": 120.0,
+        "quantity": 20,
+        "minQuantity": 10
     }
 ]

@@ -46,5 +46,11 @@
         "productId": "2ef2a8bf-5dd0-4ef4-b14b-5ed6e10c8231",
         "quantity": 5,
         "date": "2023-10-09T17:52:44.791351"
+    },
+    {
+        "_id": "2d50a170-75e7-49e7-bd0c-ac50848f6c50",
+        "productId": "2ef2a8bf-5dd0-4ef4-b14b-5ed6e10c8231",
+        "quantity": -4,
+        "date": "2023-10-11T11:50:43.553488"
     }
 ]

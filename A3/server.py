@@ -23,6 +23,7 @@ class Manager:
         bytes_data = base64.b64decode(public_key['data'])
         self.public_key = Ed25519PublicKey.from_public_bytes(bytes_data)
         self.notification_uri = notification_uri
+        print(f'New Manager: {self.name} - {self._id} - {self.notification_uri}')
 
 
     def verify_signature(self, signature: str):
@@ -230,7 +231,7 @@ class Server:
 
     def add_product(self, name: str, description: str, price: float, quantity: int, minQuantity: int, signature: str):
         self.verify_manager(signature)
-        self.stock.add_stock(name, description, price, quantity, minQuantity)
+        return self.stock.add_stock(name, description, price, quantity, minQuantity)
 
     def edit_product(self, id: str, quantity: int, signature: str):
         self.verify_manager(signature)
@@ -256,11 +257,12 @@ class Server:
 
 if __name__ == '__main__':
     try:
-        daemon = Pyro5.server.Daemon()         # make a Pyro daemon
+        daemon = Pyro5.server.Daemon(host="192.168.15.58")         # make a Pyro daemon
         ns = Pyro5.api.locate_ns()             # find the name server
         uri = daemon.register(Server)   # register the greeting maker as a Pyro object
         ns.register("server.uri", uri)   # register the object with a name in the name server
 
+        print(ns.list())
         print("Ready.")
         daemon.requestLoop()                   # start the event loop of the server to wait for calls
 
