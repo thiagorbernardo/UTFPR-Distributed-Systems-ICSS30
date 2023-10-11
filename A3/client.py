@@ -45,8 +45,9 @@ class Client:
         price = input("Digite o preço do produto: \n").strip()
         quantity = input("Digite a quantidade do produto: \n").strip()
         minQuantity = input("Digite a quantidade minima do produto: \n").strip()
-        self.server.add_product(name, description, float(price), int(quantity), int(minQuantity), self.sign)
-        print("Produto adicionado com sucesso! \n")
+        print("id do produto criado \n")
+        print(self.server.add_product(name, description, float(price), int(quantity), int(minQuantity), self.sign))
+        print("\nProduto adicionado com sucesso! \n")
         
     def edit_product(self):
         id = input("Digite o id do produto: \n").strip()
