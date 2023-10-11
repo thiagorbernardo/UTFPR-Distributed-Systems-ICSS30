@@ -16,9 +16,9 @@ class Client:
         self.private_key = None
         self.public_key = None
         self.sign = None
-        self.uri = None
-        self.notify = Notify()
         self.server = None
+        self.daemon = Pyro5.api.Daemon()
+        self.notify_uri = self.daemon.register(Notify)
 
     def firstRegister(self, name):
         self.name = name
@@ -38,12 +38,12 @@ class Client:
         print("\n")
 
         self.server = Pyro5.api.Proxy("PYRONAME:server.uri")
-        self.server.add_manager(name, public_key_bytes, str(self.notify.uri))
+        self.server.add_manager(name, public_key_bytes, str(self.notify_uri))
         threading.Thread(target=self.wait_notification, args=()).start()
 
     def wait_notification(self):
         while not threading.Event().is_set():
-            self.notify.daemon.requestLoop()
+            self.daemon.requestLoop()
 
     
     def add_product(self):
@@ -75,10 +75,6 @@ class Client:
 
 @Pyro5.api.expose
 class Notify:
-
-    def __init__(self):
-        self.daemon = Pyro5.api.Daemon()
-        self.uri = self.daemon.register(Notify)
 
     def notify(self, type: int, notify: str):
 

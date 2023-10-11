@@ -33,6 +33,7 @@ class Manager:
     def notify(self, type: int, message: str):
         manager_notifier = Pyro5.api.Proxy(self.notification_uri)
         manager_notifier.notify(type, message)
+        print(f'Notification({type}) sent to {self.notification_uri}')
         
 
 class Product:
@@ -251,7 +252,6 @@ class Server:
                     self.manager.notify(3, low_intereset_report)
                 if(low_stock_report):
                     self.manager.notify(4, low_stock_report)
-                print("enviando notificação \n")
                 time.sleep(60)
 
 if __name__ == '__main__':
