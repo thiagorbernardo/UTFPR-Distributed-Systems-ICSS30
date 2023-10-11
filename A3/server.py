@@ -1,6 +1,5 @@
 import json
 import base64
-import random
 import threading
 import time
 from typing import List
@@ -97,14 +96,18 @@ class Stock:
             json_file.write(json.dumps(self.stock))
 
     def edit_stock(self, id: str, quantity: int):
+        item_min_quantity = None
         for item in self.stock:
             if item['_id'] == id:
                 print(f'item: {item["_id"]} - current quantity: {item["quantity"]} - add {quantity} to current quantity')
                 item['quantity'] += quantity
                 ProductHistory(item['_id'], quantity).save()
+                if(item['quantity'] <= item['minQuantity']):
+                    item_min_quantity = item
 
         self.save_stock()
         self.refresh_stock()
+        return item_min_quantity
 
     def add_stock(self, name: str, description: str, price: float, quantity: int, minQuantity: int):
         print('add stock')
@@ -165,7 +168,7 @@ class Report:
         stock = self.get_stock_report()
         low_interest = []
 
-        history_product_ids = [item['productId'] for item in history if datetime.fromisoformat(item['date']) >= date and item['quantity'] > 0]
+        history_product_ids = [item['productId'] for item in history if datetime.fromisoformat(item['date']) >= date and item['quantity'] < 0]
         history_product_ids_unique = list(set(history_product_ids))
 
         # print(history_product_ids_unique)
@@ -222,7 +225,7 @@ class Server:
         self.manager = Manager(name, public_key, notification_uri)
         threading.Thread(target=self._cron_notifications, args=()).start()
 
-    def verify_manager(self, signature: str):
+    def _verify_manager(self, signature: str):
         if(self.manager == None):
             raise Exception('Manager not found')
         self.manager.verify_signature(signature)
@@ -230,15 +233,17 @@ class Server:
         print('Manager verified')
 
     def add_product(self, name: str, description: str, price: float, quantity: int, minQuantity: int, signature: str):
-        self.verify_manager(signature)
+        self._verify_manager(signature)
         return self.stock.add_stock(name, description, price, quantity, minQuantity)
 
     def edit_product(self, id: str, quantity: int, signature: str):
-        self.verify_manager(signature)
-        self.stock.edit_stock(id, quantity)
+        self._verify_manager(signature)
+        item_min_quantity = self.stock.edit_stock(id, quantity)
+        if(item_min_quantity):
+            self.manager.notify(4, json.dumps(item_min_quantity, indent=2))
 
     def get_report(self, type: int, date: datetime = None, signature: str = None):
-        self.verify_manager(signature)
+        self._verify_manager(signature)
         report = Report(type, self.stock)
         if(date):
             date = datetime.fromisoformat(date)
@@ -248,16 +253,13 @@ class Server:
         while not threading.Event().is_set():
             if(self.manager != None):
                 low_intereset_report = Report(3, self.stock).get_report(datetime(1999, 1, 1))
-                low_stock_report = Report(4, self.stock).get_report()
                 if(low_intereset_report):
                     self.manager.notify(3, low_intereset_report)
-                if(low_stock_report):
-                    self.manager.notify(4, low_stock_report)
                 time.sleep(60)
 
 if __name__ == '__main__':
     try:
-        daemon = Pyro5.server.Daemon(host="192.168.15.58")         # make a Pyro daemon
+        daemon = Pyro5.server.Daemon(host="10.181.29.230")         # make a Pyro daemon
         ns = Pyro5.api.locate_ns()             # find the name server
         uri = daemon.register(Server)   # register the greeting maker as a Pyro object
         ns.register("server.uri", uri)   # register the object with a name in the name server
