@@ -16,7 +16,7 @@ class Client:
         self.public_key = None
         self.sign = None
         self.server = None
-        self.daemon = Pyro5.server.Daemon(host="192.168.15.97")
+        self.daemon = Pyro5.server.Daemon(host="10.181.30.101")
         self.notify_uri = self.daemon.register(Notify)
 
     def firstRegister(self, name):
@@ -75,7 +75,7 @@ class Notify:
         if type == 3:
             print("\nGerando relatorio de produtos não vendidos\n\n")
         elif type == 4:
-            print("\nGerando relatorio de produtos que atingiram o estoque minimo \n\n")
+            print("\nAtenção!! Item chegou no seu estoque minimo! \n\n")
         print(notify)
 
 
