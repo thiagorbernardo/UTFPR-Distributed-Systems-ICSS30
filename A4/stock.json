@@ -1,0 +1,50 @@
+[
+    {
+        "_id": "c63f6e34-3eb7-4d0a-b6ea-20e4b6e1a0b1",
+        "name": "Smartphone Galaxy S21",
+        "description": "Smartphone Galaxy S21",
+        "price": 799.99,
+        "quantity": 5,
+        "minQuantity": 1
+    },
+    {
+        "_id": "979f8be0-1d5f-4310-8be1-6c2e2d2d6c4f",
+        "name": "Laptop HP Spectre x360",
+        "description": "Laptop HP Spectre x360",
+        "price": 1249.89,
+        "quantity": 5,
+        "minQuantity": 1
+    },
+    {
+        "_id": "0cb155da-d81c-4371-90ab-ea2ea4faff05",
+        "name": "Sony Noise-Cancelling Headphones",
+        "description": "Sony Noise-Cancelling Headphones",
+        "price": 189.99,
+        "quantity": 5,
+        "minQuantity": 1
+    },
+    {
+        "_id": "4d63a152-9680-44c6-bb16-8c9f7987d21a",
+        "name": "LG 4K Ultra HD Smart TV",
+        "description": "LG 4K Ultra HD Smart TV",
+        "price": 699.00,
+        "quantity": 5,
+        "minQuantity": 1
+    },
+    {
+        "_id": "ae5c5f32-01d7-4c71-888f-8278e2b0f8e2",
+        "name": "Apple AirPods Pro",
+        "description": "Apple AirPods Pro",
+        "price": 219.50,
+        "quantity": 5,
+        "minQuantity": 1
+    },
+    {
+        "_id": "2ef2a8bf-5dd0-4ef4-b14b-5ed6e10c8231",
+        "name": "Dell Gaming Monitor",
+        "description": "Dell Gaming Monitor",
+        "price": 379.75,
+        "quantity": 5,
+        "minQuantity": 1
+    }
+]
