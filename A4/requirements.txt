@@ -1,0 +1,7 @@
+cryptography==41.0.4
+flask
+flask_sse
+flask_cors
+apscheduler
+uuid
+typing

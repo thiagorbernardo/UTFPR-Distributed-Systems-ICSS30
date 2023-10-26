@@ -1,5 +1,5 @@
 import json
-import base64
+import random
 import threading
 import time
 from typing import List
@@ -8,10 +8,26 @@ from datetime import datetime
 
 from flask import Flask, request
 from flask_sse import sse
+from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
+
+
 app = Flask(__name__)
-app.config["REDIS_URL"] = "redis://localhost"
+CORS(app)
+app.config["REDIS_URL"] = "redis://localhost:6379"
 app.register_blueprint(sse, url_prefix='/stream')
+sched = BackgroundScheduler(daemon=True)
+
+# class Notification:
+#     type: int
+#     message: str
+
+#     def __init__(self, type: int, message: str):
+#         self.type = type
+#         self.message = message
+
+#     def send(self):
+        
 
 class Manager:
     _id: str
@@ -20,14 +36,18 @@ class Manager:
     def __init__(self, name: str):
         self._id = str(uuid.uuid4())
         self.name = name
-        # self.notification_uri = notification_uri
-        print(f'New Manager: {self.name} - {self._id}')# - {self.notification_uri}')
+        print(f'New Manager: {self.name} - {self._id}')
 
     def notify(self, type: int, message: str):
-        # manager_notifier = Pyro5.api.Proxy(self.notification_uri)
-        # manager_notifier.notify(type, message)
-        # print(f'Notification({type}) sent to {self.notification_uri}')
-        pass
+        print(f'Notification({type}) sent using SSE')
+        # with app.app_context():
+            # sse.publish({"type": type, "message": message}, type='publish')
+            # sse.publish({"type": type, "message": message}, type='dataUpdate')
+        # Teste SSE
+        with app.app_context():
+            sse.publish({"message": 'NOTIFY MANAGER'}, type='publish')
+            sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
+            print("Event Scheduled at ",datetime.now())
         
 
 class Product:
@@ -191,12 +211,10 @@ def _verify_manager():
     print('Manager verified')
 
 def _cron_notifications():
-    while not threading.Event().is_set():
-        if(manager != None):
-            low_intereset_report = Report(3, stock).get_report(datetime(1999, 1, 1))
-            if(low_intereset_report):
-                manager.notify(3, low_intereset_report)
-            time.sleep(60)
+    if(manager != None):
+        low_intereset_report = Report(3, stock).get_report(datetime(1999, 1, 1))
+        if(low_intereset_report):
+            manager.notify(3, low_intereset_report)
 
 @app.post('/manager')
 def add_manager():
@@ -255,3 +273,19 @@ def get_report(type: int):
 @app.get('/')
 def index():
     return 'Trabalho 4 de Sistemas Distribuídos - Estoque'
+
+# sched.add_job(_cron_notifications,'interval',seconds=10)
+
+##### APENAS PARA TESTE #######
+def server_side_event():
+    """ Function to publish server side event """
+    with app.app_context():
+        sse.publish({"message": datetime.now()}, type='publish')
+        sse.publish({"message": datetime.now()}, type='dataUpdate')
+        print("Event Scheduled at ",datetime.now())
+
+sched.add_job(server_side_event,'interval',seconds=random.randrange(1,8))
+##### APENAS PARA TESTE #######
+
+sched.start()
+sched.add_job
