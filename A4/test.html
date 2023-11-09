@@ -107,6 +107,8 @@
                 }
             } catch (error) {
                 console.error('An error occurred:', error);
+                alert('An error occurred while submitting the name. Please try again later.');
+                return error;
             }
         }
 
@@ -130,6 +132,7 @@
                 }
             } catch (error) {
                 console.error('An error occurred:', error);
+                return error;
             }
         }
 
@@ -151,9 +154,12 @@
             };
             payloadJson = JSON.stringify(payload);
             // Send a POST request with the user's name as JSON
-            sendRest(payloadJson, "POST", "http://127.0.0.1:5000/manager");
+            error = sendRest(payloadJson, "POST", "http://127.0.0.1:5000/manager");
 
-            // Hide the name input page (you can add this to your existing function)
+            if (error) {
+                return;
+            }
+
             nameInputPage.style.display = "none";
             optionSelectionPage.style.display = "block";
         });
@@ -222,7 +228,6 @@
                 minQuantity: productMinQuantity
             };
             const productDataJSON = JSON.stringify(productData);
-
             sendRest(productDataJSON, "POST", "http://127.0.0.1:5000/products");
 
             // After processing, return to the option selection page
@@ -249,13 +254,12 @@
             }
             // Create a JSON object with the user's input
             const productData = {
-                itemNumber: itemNumber,
+                quantity: itemNumber,
             };
 
             const productDataJSON = JSON.stringify(productData);
             console.log("teste" + productDataJSON);
-            sendRest(productDataJSON, "PATCH", "http://127.0.0.1:5000/products/" + itemID);
-
+            error = sendRest(productDataJSON, "PATCH", "http://127.0.0.1:5000/products/" + itemID);
             // After processing, return to the option selection page
             optionSelectionPage.style.display = "block";
             optionScreens.forEach(screen => {
