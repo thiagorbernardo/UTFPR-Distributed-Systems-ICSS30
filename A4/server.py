@@ -47,7 +47,7 @@ class Manager:
         with app.app_context():
             sse.publish({"message": 'NOTIFY MANAGER'}, type='publish')
             sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
-            print("Event Scheduled at ",datetime.now())
+        print("Event Scheduled at ",datetime.now())
         
 
 class Product:
@@ -272,6 +272,8 @@ def get_report(type: int):
 
 @app.get('/')
 def index():
+    sse.publish({"message": 'NOTIFY MANAGER'}, type='publish')
+    sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
     return 'Trabalho 4 de Sistemas Distribuídos - Estoque'
 
 # sched.add_job(_cron_notifications,'interval',seconds=10)
@@ -288,4 +290,3 @@ sched.add_job(server_side_event,'interval',seconds=random.randrange(1,8))
 ##### APENAS PARA TESTE #######
 
 sched.start()
-sched.add_job
