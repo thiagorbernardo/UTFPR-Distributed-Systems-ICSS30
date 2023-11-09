@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tela do usuário</title>
+    <style>
+        .option-screen {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="nameInputPage">
+        <h1>Primeiro registro, digite seu nome</h1>
+        <form id="nameInputForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <br>
+            <button id="submitName" type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="optionSelectionPage" style="display: none;">
+        <h1>Qual função deseja realizar?</h1>
+        <ul>
+            <li><button id="option1">Adicionar um produto novo</button></li>
+            <li><button id="option2">Editar item</button></li>
+            <li><button id="option3">Gerar um relatorio</button></li>
+            <li><button id="option4">Quit</button></li>
+        </ul>
+    </div>
+
+    <div id="blankOption1Screen" class="option-screen">
+        <h1>Adicionar um produto novo</h1>
+        <form id="option1Form">
+            <label for="productName">Nome do Produto:</label>
+            <input type="text" id="productName" required>
+            <br>
+            <label for="productDescription">Descrição:</label>
+            <textarea id="productDescription" rows="4" required></textarea>
+            <br>
+            <label for="productPrice">Preço:</label>
+            <input type="number" id="productPrice" required>
+            <br>
+            <label for="productQuantity">Quantidade em Estoque:</label>
+            <input type="number" id="productQuantity" required>
+            <br>
+            <label for="productMinQuantity">Quantidade Mínima:</label>
+            <input type="number" id="productMinQuantity" required>
+            <br>
+            <button id="submitOption1">Submit</button>
+        </form>
+    </div>
+
+    <div id="blankOption2Screen" class="option-screen">
+        <h1>Editar produto existente</h1>
+        <form id="option2Form">
+            <label for="itemID">Item ID:</label>
+            <input type="text" id="itemID">
+            <br>
+            <label for="itemNumber">Item Number:</label>
+            <input type="number" id="itemNumber">
+            <br>
+            <button id="submitOption2">Submit</button>
+        </form>
+    </div>
+
+    <div id="blankOption3Screen" class="option-screen">
+        <h1>Qual relatorio deseja gerar?</h1>
+        <ul>
+            <li><button id="op1">Relatorio de produtos em estoque</button></li>
+            <li><button id="op2">Relatorio de fluxo de movimentação</button></li>
+            <li><button id="op3">Relatorio de produtos sem saida por periodo</button></li>
+        </ul>
+        <button id="backToOptions">Back</button>
+        <div id="messageArea"></div>
+    </div>
+
+    <script>
+        const nameInputPage = document.getElementById("nameInputPage");
+        const optionSelectionPage = document.getElementById("optionSelectionPage");
+        const optionScreens = document.querySelectorAll(".option-screen");
+        const nameInputForm = document.getElementById("nameInputForm");
+        const nameInput = document.getElementById("name");
+        const option3Buttons = document.querySelectorAll("button[id^='op']");
+        const messageArea = document.getElementById("messageArea");
+        const backToOptionsButton = document.getElementById("backToOptions");
+        const submitNameButton = document.getElementById("submitName");
+
+        async function sendRest(payload, method, endpoint) {
+            const apiUrl = endpoint;
+            const requestData = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: payload,
+            };
+
+            try {
+                const response = await fetch(apiUrl, requestData);
+                if (response.ok) {
+                    console.log('POST request successful.');
+                } else {
+                    console.error('POST request failed.');
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+        }
+
+        async function sendGetRequest(endpoint) {
+            const apiUrl = endpoint;
+
+            try {
+                const response = await fetch(apiUrl);
+
+                if (response.ok) {
+                    const text = await response.text();
+                    // Display the retrieved text in the message area
+                    const messageArea = document.getElementById("messageArea");
+
+                    messageArea.textContent = JSON.stringify(text);
+                    return text;
+
+
+                } else {
+                    console.error('GET request failed.');
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+        }
+
+        function resetWebpage() {
+            nameInput.value = ""; // Clear the name input
+            nameInputPage.style.display = "block"; // Show the name input page
+            optionSelectionPage.style.display = "none"; // Hide the option selection page
+            optionScreens.forEach(screen => {
+                screen.style.display = "none"; // Hide all option screens
+            });
+        }
+
+        submitNameButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            const userName = nameInput.value;
+            console.log(nameInput)
+            const payload = {
+                name: userName,
+            };
+            payloadJson = JSON.stringify(payload);
+            // Send a POST request with the user's name as JSON
+            sendRest(payloadJson, "POST", "http://127.0.0.1:5000/manager");
+
+            // Hide the name input page (you can add this to your existing function)
+            nameInputPage.style.display = "none";
+            optionSelectionPage.style.display = "block";
+        });
+
+        nameInputForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const userName = nameInput.value;
+
+            // Hide the name input page
+            nameInputPage.style.display = "none";
+
+            // Show the option selection page
+            optionSelectionPage.style.display = "block";
+        });
+
+        const optionButtons = document.querySelectorAll("button[id^='option']");
+        optionButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const option = button.id;
+                console.log("Button clicked:", option);
+
+                // If "Quit" (option 4) is selected, reset the webpage
+                if (option === "option4") {
+                    resetWebpage();
+                } else {
+                    // Hide all option screens
+                    optionScreens.forEach(screen => {
+                        screen.style.display = "none";
+                    });
+                    optionSelectionPage.style.display = "none";
+
+                    const screenId = `blankOption${option.charAt(option.length - 1)}Screen`;
+                    console.log("Selected screen:", screenId);
+                    const selectedScreen = document.getElementById(screenId);
+
+                    if (selectedScreen) {
+                        selectedScreen.style.display = "block";
+                    }
+                }
+            });
+        });
+
+        const submitOption1Button = document.getElementById("submitOption1");
+        submitOption1Button.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Get the user input values
+            const productName = document.getElementById("productName").value;
+            const productDescription = document.getElementById("productDescription").value;
+            const productPrice = parseFloat(document.getElementById("productPrice").value);
+            const productQuantity = parseInt(document.getElementById("productQuantity").value);
+            const productMinQuantity = parseInt(document.getElementById("productMinQuantity").value);
+
+            // Check if any of the required fields are empty
+            if (!productName || !productDescription || isNaN(productPrice) || isNaN(productQuantity) || isNaN(productMinQuantity)) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            // Create a JSON object with the user's input
+            const productData = {
+                name: productName,
+                description: productDescription,
+                price: productPrice,
+                quantity: productQuantity,
+                minQuantity: productMinQuantity
+            };
+            const productDataJSON = JSON.stringify(productData);
+
+            sendRest(productDataJSON, "POST", "http://127.0.0.1:5000/products");
+
+            // After processing, return to the option selection page
+            optionSelectionPage.style.display = "block";
+            optionScreens.forEach(screen => {
+                screen.style.display = "none";
+            });
+        });
+
+        const submitOption2Button = document.getElementById("submitOption2");
+        submitOption2Button.addEventListener("click", function () {
+            event.preventDefault();
+
+            // Process the entered ID and number as needed
+            const itemID = document.getElementById("itemID").value;
+            const itemNumber = parseInt(document.getElementById("itemNumber").value);
+
+            console.log("Item ID:", itemID);
+            console.log("Item Number:", itemNumber);
+            // Check if any of the required fields are empty
+            if (!itemID || isNaN(itemNumber)) {
+                alert("Please fill in all required fields.");
+                return; // Exit the function if any required field is empty
+            }
+            // Create a JSON object with the user's input
+            const productData = {
+                itemNumber: itemNumber,
+            };
+
+            const productDataJSON = JSON.stringify(productData);
+            console.log("teste" + productDataJSON);
+            sendRest(productDataJSON, "PATCH", "http://127.0.0.1:5000/products/" + itemID);
+
+            // After processing, return to the option selection page
+            optionSelectionPage.style.display = "block";
+            optionScreens.forEach(screen => {
+                screen.style.display = "none";
+            });
+        });
+
+        option3Buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                if (button.id === "op1") {
+                    response = sendGetRequest("http://127.0.0.1:5000/reports/1");
+                } else if (button.id === "op2") {
+                    response = sendGetRequest("http://127.0.0.1:5000/reports/2");
+                } else if (button.id === "op3") {
+                    // Request user input for a date
+                    messageArea.innerHTML = "Please enter a date: <input type='date' id='inputDate'><button id='submitDate'>Submit</button>";
+
+                    const inputDate = document.getElementById("inputDate");
+                    const submitDateButton = document.getElementById("submitDate");
+
+                    submitDateButton.addEventListener("click", function () {
+                        // Split the input date into day, month, and year components
+                        const dateComponents = inputDate.value.split("-");
+
+                        // Create a new Date object by specifying the year, month, and day
+                        const year = dateComponents[0];
+                        const month = dateComponents[1];
+                        const day = dateComponents[2];
+                        const formattedDate = year + "-" + month + "-" + day + "T00:00:00";
+                        console.log(formattedDate);
+                        response = sendGetRequest("http://127.0.0.1:5000/reports/3?date=" + formattedDate);
+                    });
+                }
+            });
+        });
+
+        backToOptionsButton.addEventListener("click", function () {
+            // Hide the current screen (option 3)
+            const option3Screen = document.getElementById("blankOption3Screen");
+            option3Screen.style.display = "none";
+
+            // Show the option selection page
+            optionSelectionPage.style.display = "block";
+        });
+    </script>
+</body>
+
+</html>
