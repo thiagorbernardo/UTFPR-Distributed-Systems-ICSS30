@@ -98,18 +98,14 @@
                 body: payload,
             };
 
-            try {
-                const response = await fetch(apiUrl, requestData);
-                if (response.ok) {
-                    console.log('POST request successful.');
-                } else {
-                    console.error('POST request failed.');
-                }
-            } catch (error) {
-                console.error('An error occurred:', error);
-                alert('An error occurred while submitting the name. Please try again later.');
-                return error;
+            const response = await fetch(apiUrl, requestData);
+            if (response.ok) {
+                console.log('POST request successful.');
+            } else {
+                console.error('POST request failed.');
+                throw new Error('POST request failed.');
             }
+
         }
 
         async function sendGetRequest(endpoint) {
@@ -132,7 +128,6 @@
                 }
             } catch (error) {
                 console.error('An error occurred:', error);
-                return error;
             }
         }
 
@@ -153,13 +148,14 @@
                 name: userName,
             };
             payloadJson = JSON.stringify(payload);
-            // Send a POST request with the user's name as JSON
-            error = sendRest(payloadJson, "POST", "http://127.0.0.1:5000/manager");
-
-            if (error) {
+            // Send a POST request with the user's name as JSONtry 
+            try {
+                sendRest(payloadJson, "POST", "http://127.0.0.1:5000/manager");
+            } catch (error) {
+                console.error('An error occurred:', error);
+                alert('An error occurred while submitting the name. Please try again later.');
                 return;
             }
-
             nameInputPage.style.display = "none";
             optionSelectionPage.style.display = "block";
         });
