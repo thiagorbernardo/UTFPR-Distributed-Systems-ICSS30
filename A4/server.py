@@ -45,8 +45,8 @@ class Manager:
             # sse.publish({"type": type, "message": message}, type='dataUpdate')
         # Teste SSE
         with app.app_context():
-            sse.publish({"message": 'NOTIFY MANAGER'}, type='publish')
-            sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
+            sse.publish({"message": message, "type": type}, type='publish')
+            # sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
         print("Event Scheduled at ",datetime.now())
         
 
@@ -249,7 +249,7 @@ def edit_product(id: str):
         body = request.get_json()
         item_min_quantity = stock.edit_stock(id, body['quantity'])
         if(item_min_quantity):
-            manager.notify(4, json.dumps(item_min_quantity, indent=2))
+            manager.notify(4, item_min_quantity)
         return {}, 200
     except Exception as e:
         print(f'Error {e}')
@@ -276,7 +276,7 @@ def index():
     sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
     return 'Trabalho 4 de Sistemas Distribuídos - Estoque'
 
-# sched.add_job(_cron_notifications,'interval',seconds=10)
+sched.add_job(_cron_notifications,'interval',seconds=10)
 
 ##### APENAS PARA TESTE #######
 def server_side_event():
@@ -286,7 +286,7 @@ def server_side_event():
         sse.publish({"message": datetime.now()}, type='dataUpdate')
         print("Event Scheduled at ",datetime.now())
 
-sched.add_job(server_side_event,'interval',seconds=random.randrange(1,8))
+# sched.add_job(server_side_event,'interval',seconds=random.randrange(1,8))
 ##### APENAS PARA TESTE #######
 
 sched.start()

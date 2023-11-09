@@ -313,11 +313,33 @@
             }
         };
 
+        const publish = function (event) {
+            const type = event.type;
+
+            const data = JSON.parse(event.data);
+
+            if(data.type == 3){
+                const mapString = data.message.map((item) => {
+                    return `${item.name} - ${item.quantity}\n`;
+                }).join('');
+
+                alert(`Estes produtos estão com pouco interesse:\n${mapString}`)
+            } else {
+                const product = data.message;
+    
+                alert(`Produto ${product.name} está com pouco estoque! Quantidade atual: ${product.quantity}`)
+            }
+
+            if (type === 'result') {
+                es.close();
+            }
+        };
+
         es.addEventListener('open', listener);
-        es.addEventListener('publish', listener);
-        es.addEventListener('message', listener);
-        es.addEventListener('error', listener);
-        es.addEventListener('result', listener);
+        es.addEventListener('publish', publish);
+        //es.addEventListener('message', listener);
+        //es.addEventListener('error', listener);
+        //es.addEventListener('result', listener);
     </script>
 </body>
 
