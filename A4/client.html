@@ -122,8 +122,38 @@
                     const text = await response.text();
                     // Display the retrieved text in the message area
                     const messageArea = document.getElementById("messageArea");
+                    const products = JSON.parse(jsonString);
 
-                    messageArea.textContent = JSON.stringify(text);
+                    const table = document.createElement('table');
+                    table.style.width = '100%';
+                    table.setAttribute('border', '1');
+
+                    const header = table.createTHead();
+                    const row = header.insertRow(0);
+                    const headers = ["ID", "Description", "Min Quantity", "Name", "Price", "Quantity"];
+                    for (let i = 0; i < headers.length; i++) {
+                        const cell = row.insertCell(i);
+                        cell.innerHTML = "<b>" + headers[i] + "</b>";
+                    }
+
+                    for (let i = 0; i < products.length; i++) {
+                        const row = table.insertRow(-1);
+                        const cell1 = row.insertCell(0);
+                        const cell2 = row.insertCell(1);
+                        const cell3 = row.insertCell(2);
+                        const cell4 = row.insertCell(3);
+                        const cell5 = row.insertCell(4);
+                        const cell6 = row.insertCell(5);
+                        cell1.innerHTML = products[i]._id;
+                        cell2.innerHTML = products[i].description;
+                        cell3.innerHTML = products[i].minQuantity;
+                        cell4.innerHTML = products[i].name;
+                        cell5.innerHTML = products[i].price;
+                        cell6.innerHTML = products[i].quantity;
+                    }
+
+                    messageArea.textContent = ''; // Clear the messageArea
+                    messageArea.appendChild(table); // Append the table to the messageArea
                     return text;
 
 
