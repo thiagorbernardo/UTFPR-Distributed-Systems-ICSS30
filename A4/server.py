@@ -8,12 +8,13 @@ from datetime import datetime
 
 from flask import Flask, request
 from flask_sse import sse
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["REDIS_URL"] = "redis://localhost:6379"
 app.register_blueprint(sse, url_prefix='/stream')
 sched = BackgroundScheduler(daemon=True)
@@ -217,11 +218,13 @@ def _cron_notifications():
             manager.notify(3, low_intereset_report)
 
 @app.post('/manager')
+@cross_origin(origins='*')
 def add_manager():
     global manager
     if not request.is_json: return {"error": "Request must be JSON"}, 415
     try:
         body = request.get_json()
+        print(f'POST /manager - {body}')
         manager = Manager(body['name'])
         # threading.Thread(target=_cron_notifications, args=()).start()
         return {}, 201
@@ -230,11 +233,13 @@ def add_manager():
         return {"error": str(e)}, 500
 
 @app.post('/products')
+@cross_origin(origins='*')
 def add_product():
     if not request.is_json: return {"error": "Request must be JSON"}, 415
     try:
         _verify_manager()
         body = request.get_json()
+        print(f'POST /products - {body}')
         productId = stock.add_stock(body['name'], body['description'], body['price'], body['quantity'], body['minQuantity'])
         return {"id": productId}, 201
     except Exception as e:
@@ -242,11 +247,13 @@ def add_product():
         return {"error": str(e)}, 500
 
 @app.patch('/products/<id>')
+@cross_origin(origins='*')
 def edit_product(id: str):
     if not request.is_json: return {"error": "Request must be JSON"}, 415
     try:
         _verify_manager()
         body = request.get_json()
+        print(f'PATCH /products/{id} - {body}')
         item_min_quantity = stock.edit_stock(id, body['quantity'])
         if(item_min_quantity):
             manager.notify(4, item_min_quantity)
@@ -256,6 +263,7 @@ def edit_product(id: str):
         return {"error": str(e)}, 500
 
 @app.get('/reports/<int:type>')
+@cross_origin(origins='*')
 def get_report(type: int):
     if type not in [1, 2, 3]: return {"error": "Invalid report type. Must be 1, 2 or 3"}, 400
     date = request.args.get('date')
@@ -271,12 +279,13 @@ def get_report(type: int):
         return {"error": str(e)}, 500
 
 @app.get('/')
+@cross_origin(origins='*')
 def index():
     sse.publish({"message": 'NOTIFY MANAGER'}, type='publish')
     sse.publish({"message": 'NOTIFY MANAGER'}, type='dataUpdate')
     return 'Trabalho 4 de Sistemas Distribuídos - Estoque'
 
-sched.add_job(_cron_notifications,'interval',seconds=10)
+sched.add_job(_cron_notifications,'interval',seconds=60)
 
 ##### APENAS PARA TESTE #######
 def server_side_event():
